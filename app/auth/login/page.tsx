@@ -1,11 +1,11 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
+import { FormEvent, useMemo, useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { supabase } from "@/utils/supabase/client";
 
-export default function LoginPage() {
+function LoginContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const role = searchParams.get("role");
@@ -109,5 +109,13 @@ export default function LoginPage() {
         )}
       </section>
     </main>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
+      <LoginContent />
+    </Suspense>
   );
 }
